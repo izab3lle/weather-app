@@ -1,6 +1,9 @@
 package com.example.weatherapp
 
 import android.app.Activity
+
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -9,10 +12,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -24,11 +31,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.weatherapp.ui.theme.DataField
+import com.example.weatherapp.ui.theme.LoginButton
+import com.example.weatherapp.ui.theme.PasswordField
+import com.example.weatherapp.ui.theme.RegisterButton
 import com.example.weatherapp.ui.theme.WeatherAppTheme
 
 
@@ -51,50 +63,44 @@ class LoginActivity : ComponentActivity() {
 fun LoginPage(modifier: Modifier = Modifier) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
-    val activity = LocalContext.current// as Activity
+    val activity = LocalContext.current as Activity
+
+    // modifier.padding(0.dp)
 
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         val defaultSpacing = 16.dp
         val fieldSpacing = 8.dp
+        Icon(
+            painter = painterResource(id = R.drawable.logo_1_),
+            "WeatherApp logo"
+        )
         Text(
             text = "Bem-vindo/a!",
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold
         )
-        //Spacer(modifier = modifier.height(defaultSpacing))
-        OutlinedTextField(
-            value = email,
-            label = { Text(text = "Digite seu e-mail") },
-            modifier = modifier.fillMaxWidth(fraction = .9f),
-            onValueChange = { email = it }
-        )
-        //Spacer(modifier = modifier.size(fieldSpacing))
-        OutlinedTextField(
-            value = password,
-            label = { Text(text = "Digite sua senha") },
-            modifier = modifier.fillMaxWidth(fraction = .9f),
-            onValueChange = { password = it },
-            visualTransformation = PasswordVisualTransformation()
-        )
-        //Spacer(modifier = modifier.size(defaultSpacing))
+        Spacer(modifier = Modifier.height(defaultSpacing))
+
+        DataField(email, "Digite seu email") { email = it }
+        Spacer(modifier = Modifier.size(fieldSpacing))
+        PasswordField(password, "Digite sua senha") { password = it }
+
+        Spacer(modifier = Modifier.size(defaultSpacing))
         Row(
-            modifier = modifier.fillMaxWidth(fraction = .9f),
+            modifier = Modifier.fillMaxWidth(fraction = .9f),
             horizontalArrangement = Arrangement.SpaceEvenly)
         {
-            Button( onClick = {
-                    Toast.makeText(activity, "Login OK!", Toast.LENGTH_LONG).show()
-                },
-                enabled = email.isNotEmpty() && password.isNotEmpty()
-            ) {
-                Text("Login")
-            }
+            LoginButton(email, password, activity)
             Button(
                 onClick = { email = ""; password = "" }
             ) {
                 Text("Limpar")
             }
         }
+        RegisterButton(activity)
     }
 }

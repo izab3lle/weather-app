@@ -30,9 +30,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.weatherapp.ui.theme.DataField
+import com.example.weatherapp.ui.theme.PasswordField
 import com.example.weatherapp.ui.theme.WeatherAppTheme
 
 class RegisterActivity : ComponentActivity() {
@@ -67,36 +72,27 @@ fun RegisterPage(modifier: Modifier = Modifier) {
     ) {
         val defaultSpacing = 16.dp
         val fieldSpacing = 8.dp
-        OutlinedTextField(
-            value = username,
-            label = { Text(text = "Digite seu nome de usuário") },
-            modifier = Modifier.fillMaxWidth(fraction = .9f),
-            onValueChange = { username = it }
+        val titleSpacing = 60.dp
+        Text(
+            text = "Registre-se",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
         )
+        Spacer(modifier = Modifier.size(titleSpacing))
+
+        DataField(username, "Digite seu nome de usuário") { username = it }
         Spacer(modifier = Modifier.size(fieldSpacing))
-        OutlinedTextField(
-            value = email,
-            label = { Text(text = "Digite seu email") },
-            modifier = Modifier.fillMaxWidth(fraction = .9f),
-            onValueChange = { email = it }
-        )
+
+        DataField(email, "Digite seu email") { email = it }
         Spacer(modifier = Modifier.size(fieldSpacing))
-        OutlinedTextField(
-            value = password,
-            label = { Text(text = "Digite sua senha") },
-            modifier = Modifier.fillMaxWidth(fraction = .9f),
-            onValueChange = { password = it },
-            visualTransformation = PasswordVisualTransformation()
-        )
+
+        PasswordField(password, "Digite sua senha") { password = it }
         Spacer(modifier = Modifier.size(fieldSpacing))
-        OutlinedTextField(
-            value = confirmPassword,
-            label = { Text(text = "Insira mais uma vez") },
-            modifier = Modifier.fillMaxWidth(fraction = .9f),
-            onValueChange = { confirmPassword = it },
-            visualTransformation = PasswordVisualTransformation()
-        )
+
+        PasswordField(confirmPassword, "Insira mais uma vez", ) { confirmPassword = it }
         Spacer(modifier = Modifier.size(defaultSpacing))
+
         Row(
             modifier = Modifier.fillMaxWidth(fraction = .9f),
             horizontalArrangement = Arrangement.SpaceEvenly)

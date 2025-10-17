@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -79,42 +81,59 @@ fun HomePage(modifier: Modifier = Modifier) {
         Text(text = "Boas vindas!",
             fontSize = 32.sp)
         Spacer(modifier = Modifier.size(generalSpacing))
-        Box(modifier = Modifier.fillMaxWidth(.5f)
-            .background(color = Color(0xFFdbd5d5), shape = RoundedCornerShape(16.dp))
-            .padding(5.dp)
-        ) {
             Row(modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(.3f),
-                    text = "$num",
-                    fontSize = 45.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+                horizontalArrangement = Arrangement.Center)
+            {
+                Icon(
+                    painter = painterResource(id = R.drawable.outline_device_thermostat_24,),
+                    contentDescription = null,
+                    modifier = Modifier.size(50.dp)
                 )
-                Column {
-                    Button(
-                        modifier = Modifier.fillMaxWidth(.5f),
-                        onClick = {++num}
+                Box(modifier = Modifier.fillMaxWidth(.5f)
+                    .background(color = Color(0xFFdbd5d5), shape = RoundedCornerShape(16.dp))
+                    //.padding(5.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.KeyboardArrowUp,
-                            contentDescription = null,
+                        Text(
+                            modifier = Modifier.fillMaxWidth(.6f),
+                            text = "${num}ºC",
+                            fontSize = 40.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
                         )
+                        Column {
+                            IconButton(
+                                modifier = Modifier.fillMaxWidth(.5f),
+                                onClick = {++num}
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowUp,
+                                    contentDescription = null,
+                                )
+                            }
+                            IconButton(
+                                modifier = Modifier.fillMaxWidth(.5f),
+                                onClick = {--num}
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowDown,
+                                    contentDescription = null,
+                                )
+                            }
+                        }
                     }
-                    Button(
-                        modifier = Modifier.fillMaxWidth(.5f),
-                        onClick = {--num}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.KeyboardArrowDown,
-                            contentDescription = null,
-                        )
-                    }
+
+
                 }
             }
-        }
+
+
+
         Spacer(modifier = Modifier.size(generalSpacing))
         Button(
             onClick = {
