@@ -13,12 +13,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -38,9 +42,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherapp.ui.theme.DataField
-import com.example.weatherapp.ui.theme.LoginButton
+import com.example.weatherapp.ui.theme.LoginHeading
 import com.example.weatherapp.ui.theme.PasswordField
-import com.example.weatherapp.ui.theme.RegisterButton
 import com.example.weatherapp.ui.theme.WeatherAppTheme
 
 
@@ -65,42 +68,63 @@ fun LoginPage(modifier: Modifier = Modifier) {
     var password by rememberSaveable { mutableStateOf("") }
     val activity = LocalContext.current as Activity
 
-    // modifier.padding(0.dp)
-
     Column(
-        modifier = Modifier.fillMaxSize().fillMaxWidth(),
+        modifier = modifier.padding(16.dp).fillMaxSize().fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        val defaultSpacing = 16.dp
+        val defaultSpacing = 20.dp
         val fieldSpacing = 8.dp
-        Icon(
-            painter = painterResource(id = R.drawable.logo_1_),
-            "WeatherApp logo"
-        )
-        Text(
-            text = "Bem-vindo/a!",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold
-        )
+
+        LoginHeading(modifier)
         Spacer(modifier = Modifier.height(defaultSpacing))
 
         DataField(email, "Digite seu email") { email = it }
         Spacer(modifier = Modifier.size(fieldSpacing))
-        PasswordField(password, "Digite sua senha") { password = it }
 
+        PasswordField(password, "Digite sua senha") { password = it }
         Spacer(modifier = Modifier.size(defaultSpacing))
+
+            Button(
+                modifier = Modifier.fillMaxWidth(.9f),
+                shape = RoundedCornerShape(9.dp),
+                onClick = {
+                    Toast.makeText(activity, "Login OK!", Toast.LENGTH_LONG).show()
+                    activity.startActivity(
+                        Intent(activity, MainActivity::class.java).setFlags(
+                            FLAG_ACTIVITY_SINGLE_TOP
+                        )
+                    )},
+                enabled = email.isNotEmpty() && password.isNotEmpty()
+            ) {
+                Text("Login")
+            }
+
+
+        // Botões "Login" e "Limpar"
         Row(
             modifier = Modifier.fillMaxWidth(fraction = .9f),
             horizontalArrangement = Arrangement.SpaceEvenly)
         {
-            LoginButton(email, password, activity)
-            Button(
+            FilledTonalButton(
+                modifier = Modifier.fillMaxWidth(.5f)
+                            .padding(end = 10.dp),
+                shape = RoundedCornerShape(9.dp),
+                onClick = {
+                    activity.startActivity(Intent(activity, RegisterActivity::class.java))
+                }
+            ) {
+                Text("Registrar-se")
+            }
+
+            FilledTonalButton(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(9.dp),
                 onClick = { email = ""; password = "" }
             ) {
                 Text("Limpar")
             }
         }
-        RegisterButton(activity)
+
     }
 }

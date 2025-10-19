@@ -16,9 +16,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -63,19 +66,18 @@ fun RegisterPage(modifier: Modifier = Modifier) {
     var confirmPassword by rememberSaveable { mutableStateOf("") }
     val activity = LocalContext.current as Activity
 
-    // modifier.padding(0.dp)
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        val defaultSpacing = 16.dp
+        val defaultSpacing = 30.dp
         val fieldSpacing = 8.dp
         val titleSpacing = 60.dp
+
         Text(
             text = "Registre-se",
-            fontSize = 32.sp,
+            fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -94,33 +96,35 @@ fun RegisterPage(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.size(defaultSpacing))
 
         Row(
-            modifier = Modifier.fillMaxWidth(fraction = .9f),
+            modifier = Modifier.fillMaxWidth(.9f),
             horizontalArrangement = Arrangement.SpaceEvenly)
         {
             Button(
+                modifier = Modifier
+                    .fillMaxWidth(.5f)
+                    .padding(end = 10.dp),
+                shape = RoundedCornerShape(9.dp),
+                onClick = {
+                    if(password.equals(confirmPassword)) {
+                        Toast.makeText(activity, "Registro confirmado!", Toast.LENGTH_LONG).show()
+                        activity.finish()
+                    } else {
+                        Toast.makeText(activity, "As senhas não são iguais! Insira novamente.", Toast.LENGTH_LONG).show()
+                    }
+                },
+                enabled = email.isNotEmpty() && password.isNotEmpty() && username.isNotEmpty()
+            ) {
+                Text("Registrar")
+            }
+            FilledTonalButton(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(9.dp),
                 onClick = {
                     email = ""; password = "" }
             ) {
                 Text("Limpar")
             }
-            Button(
-                onClick = {
-                    activity.finish() }
-            ) {
-                Text("Sair")
-            }
         }
-        Button( onClick = {
-            if(password.equals(confirmPassword)) {
-                Toast.makeText(activity, "Registro confirmado!", Toast.LENGTH_LONG).show()
-                activity.finish()
-            } else {
-                Toast.makeText(activity, "As senhas não são iguais! Insira novamente.", Toast.LENGTH_LONG).show()
-            }
-        },
-            enabled = email.isNotEmpty() && password.isNotEmpty() && username.isNotEmpty()
-        ) {
-            Text("Registrar")
-        }
+
     }
 }
