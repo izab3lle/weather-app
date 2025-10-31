@@ -7,6 +7,7 @@ import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
@@ -66,7 +67,7 @@ class LoginActivity : ComponentActivity() {
 fun LoginPage(modifier: Modifier = Modifier) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
-    val activity = LocalContext.current as Activity
+    val activity = LocalActivity.current as Activity
 
     Column(
         modifier = modifier.padding(16.dp).fillMaxSize().fillMaxWidth(),

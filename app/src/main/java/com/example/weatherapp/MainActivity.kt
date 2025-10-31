@@ -3,6 +3,7 @@ package com.example.weatherapp
 import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
@@ -68,7 +69,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun HomePage(modifier: Modifier = Modifier) {
-    val activity = LocalContext.current as Activity
+    val activity = LocalActivity.current as Activity
 
     Column(
         modifier = Modifier.fillMaxSize(),
