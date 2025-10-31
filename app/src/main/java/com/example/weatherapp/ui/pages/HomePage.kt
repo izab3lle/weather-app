@@ -1,4 +1,4 @@
-package com.example.weatherapp.ui.theme.pages
+package com.example.weatherapp.ui.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,14 +15,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MapPage(modifier: Modifier = Modifier.Companion) {
+fun HomePage(modifier: Modifier = Modifier.Companion) {
     Column(
         modifier = modifier.fillMaxSize()
-            .background(Color.Gray)
+            .background(Color.Blue)
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
-            text = "Mapa",
+            text = "Home",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = modifier.align(CenterHorizontally),
